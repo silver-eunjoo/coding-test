@@ -10,3 +10,13 @@ def solution(array, commands):
         answer.append(array2[k-1])
         
     return answer
+
+
+# def solution(array, commands):
+#     answer = []
+#     for a,b,c in commands:
+#         tmp_arr = array[a-1:b]
+#         tmp_arr.sort()
+#         answer.append(tmp_arr[c-1])
+#     return answer
+# 엥... 이건 다 통과되는데, 어째서 위에 코드는 다 런타임 에러가 뜰까?
