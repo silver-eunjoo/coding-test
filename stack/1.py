@@ -1,26 +1,18 @@
 def solution(s):
     answer = -1
-    pre = s[0]
-    i = 1
-    
-    while i != len(s) :
-        if pre == s[i] :
-            s = s[0:i-1] + s[i+1:len(s)]
+    stack = []
 
-            if len(s) == 0 :
-                break
-            pre = s[0]
-            i=0
-            
+    for i in s :
+        if len(stack) == 0 : # 스택 empty method
+            stack.append(i) # 스택의 push method
         else :
-            pre = s[i]
-            
-        i+=1
-
-    if len(s) == 0 :
+            if i == stack[-1] :
+                stack.pop() # 스택의 pop method
+            else :
+                stack.append(i)
+                
+    if len(stack) == 0 :
         answer = 1
-    else : 
+    else :
         answer = 0
     return answer
-
-# stack을 생각하면서 풀어야 한다...
