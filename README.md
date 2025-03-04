@@ -45,12 +45,12 @@
 [구글](https://google.com)로 바로가기
 
 |column 1|column 2|
-|---|---|
-|content1|content2|
+|---|---!|
+|content1|content2rhdidkdkdkd|
 
 제목행 밑에 저 구분선 꼭 있어야 함 ! 그리고, 정렬할 때 쓰임 ':' 컬럼을 왼쪽에 쓰면, 왼쪽 정렬, 오른쪽 -> 오른쪽 정렬, 양쪽에 하면 중앙정렬
 
 |column 1|column 2|
 |!---|---|
-|content1|content2|
+|dkdkdkdkdkcontent1|content2|
 
