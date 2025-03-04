@@ -39,8 +39,8 @@
 
 제목행 밑에 저 구분선 꼭 있어야 함 ! 그리고, 정렬할 때 쓰임 ':' 컬럼을 왼쪽에 쓰면, 왼쪽 정렬, 오른쪽 -> 오른쪽 정렬, 양쪽에 하면 중앙정렬
 
-|column 1|column 2|
-|!---|!---|
+|column number one|column number two|
+|:---|---:|
 |content1|content2|
 
 코드블럭 : ```
