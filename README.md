@@ -14,6 +14,8 @@
 
 \강조 표시\
 
+`강조표시`
+
 ... 강조 표시는 어떻게 하는 거야
 
 *기울임*
@@ -52,7 +54,7 @@
 
 |column 1|column 2|
 |!---|---|
-|dkdkdkdkdkcontent1|content2|
+|content1|content2|
 
 코드블럭 : ₩₩₩
 
