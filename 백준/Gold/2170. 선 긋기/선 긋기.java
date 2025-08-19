@@ -32,7 +32,6 @@ public class Main
 		
 		for(int i=1;i<lines;i++){ 
 		    if(max >= arr[i][0]) { // 범위가 포함되면..?
-		        min = Math.min(min, arr[i][0]);
 		        max = Math.max(max, arr[i][1]);
 		        continue;
 		    }
