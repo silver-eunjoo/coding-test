@@ -6,52 +6,53 @@ public class Main
     static boolean[] selected;
     static int minTime = Integer.MAX_VALUE;
     static int empty = 0;
+    static int M, N;
+    static String[][] map;
+    static List<int[]> virusList = new ArrayList<>();
+    static int[] dx = { -1, 0, 1, 0 };
+    static int[] dy = { 0, 1, 0, -1};
     
-    public static int bfs(String[][] map, int M, int N, List<int[]> virusList){
+    public static int bfs(){
         
-        int[] dx = { -1, 0, 1, 0 };
-        int[] dy = { 0, 1, 0, -1};
-        
-        Queue<int[]> q = new LinkedList<>();
-        
+        int zeroCnt = 0;
+        int maxTime = 0;
         boolean[][] visited = new boolean[N][N];
+        
+        ArrayDeque<int[]> deque = new ArrayDeque<>();
         
         for(int i=0;i<virusList.size();i++){
             if(selected[i]) {
-                int[] pos = virusList.get(i);
-                q.offer(new int[]{pos[0], pos[1], 0});
-                visited[pos[0]][pos[1]] = true;
+                int[] activeVirus = virusList.get(i);
+                deque.offer(new int[]{activeVirus[0], activeVirus[1], 0});
+                visited[activeVirus[0]][activeVirus[1]] = true;
             }
         }
         
-        int maxTime = 0;
-        int cnt = 0;
-        
-        while(!q.isEmpty()) {
-            int[] pos = q.poll();
+        while(!deque.isEmpty()) {
+            int[] pos = deque.poll();
             
             for(int i=0;i<4;i++){ // 상하좌우
-                int tempX = pos[0] + dx[i];
-                int tempY = pos[1] + dy[i];
+                int nx = pos[0] + dx[i];
+                int ny = pos[1] + dy[i];
                 
-                if(tempX >=0 && tempX < N && tempY >= 0 && tempY <N && !visited[tempX][tempY] && !map[tempX][tempY].equals("-")) {
-                    visited[tempX][tempY] = true;
-                    if(map[tempX][tempY].equals("0")) {
-                        cnt++;
-                        maxTime = pos[2]+1; // 빈칸일 때만
-                    } 
-                    q.offer(new int[]{tempX, tempY, pos[2] + 1});
-                    
+                if(nx < 0 || nx >= N || ny < 0 || ny >= N) continue;
+                if(visited[nx][ny] || map[nx][ny].equals("1")) continue;
+                
+                visited[nx][ny] = true;
+                if(map[nx][ny].equals("0")) {
+                    zeroCnt++;
+                    maxTime = pos[2] + 1;
                 }
+                deque.offer(new int[]{nx, ny, pos[2] + 1});
             }
         }
         
-        return cnt == empty ? maxTime : -1;
+        return zeroCnt == empty ? maxTime : -1;
     }
     
-    public static void combination(int start, int depth, int M, String[][] map, List<int[]> virusList, int N) {
+    public static void combination(int start, int depth) {
         if (depth == M) {
-            int time  = bfs(map, M, N, virusList);
+            int time  = bfs();
             if(time != -1) {
                 minTime = Math.min(minTime, time);    
             }
@@ -60,7 +61,7 @@ public class Main
         
         for(int i=start;i<virusList.size();i++){
             selected[i] = true;
-            combination(i+1, depth+1, M, map, virusList, N);
+            combination(i+1, depth+1);
             selected[i] = false;
         }
     }
@@ -73,12 +74,10 @@ public class Main
 		
 		StringTokenizer st = new StringTokenizer(line, " ");
 		
-		int N = Integer.parseInt(st.nextToken());
-		int M = Integer.parseInt(st.nextToken());
+		N = Integer.parseInt(st.nextToken());
+		M = Integer.parseInt(st.nextToken());
 		
-		String[][] map = new String[N][N];
-		
-		List<int[]> virusList = new ArrayList<>();
+		map = new String[N][N];
 		
 		for(int i=0;i<N;i++){
 		    line = br.readLine();
@@ -86,11 +85,7 @@ public class Main
 		    for(int j=0;j<N;j++){
 		        if(map[i][j].equals("0")) {
 		            empty++;
-		        }
-		        else if(map[i][j].equals("1")){
-		            map[i][j] = "-"; 
-		        }
-		        else {
+		        } else if(map[i][j].equals("2")) {
 		            virusList.add(new int[]{i, j});
 		        }
 		    }
@@ -101,7 +96,7 @@ public class Main
 		if(empty == 0) {
 		    bw.write("0");
 		} else {
-		    combination(0, 0, M, map, virusList, N);
+		    combination(0, 0);
 		    bw.write(minTime == Integer.MAX_VALUE ? "-1" : String.valueOf(minTime));
 		}
 		
