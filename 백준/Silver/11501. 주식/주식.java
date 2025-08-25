@@ -14,29 +14,23 @@ public class Main
             String line = br.readLine();
             st = new StringTokenizer(line, " "); 
             
-            List<Integer> price = new ArrayList<>();
+            int[] price = new int[D];
             
             for(int j=0;j<D;j++){
-                price.add(Integer.parseInt(st.nextToken()));
+                price[j] = Integer.parseInt(st.nextToken());
             }
             
-            bw.write(getMaxProfit(price) + "\n");
-        }
-        
-        bw.flush();
-    }
-    
-    static long getMaxProfit(List<Integer> price) {
-        long profit = 0;
-        int size = price.size();
-        int maxPrice = price.get(size-1);
-        for(int i=size-2;i>=0;i--){
-            if(price.get(i) < maxPrice) {
-                profit += maxPrice - price.get(i);
-            } else if(price.get(i) > maxPrice) {
-                maxPrice = price.get(i);
+            long profit = 0;
+            int maxPrice = price[D-1];
+            for(int j=D-2;j>=0;j--) {
+                if(price[j] < maxPrice) {
+                    profit += maxPrice - price[j];
+                } else {
+                    maxPrice = price[j];
+                }
             }
+            bw.write(profit + "\n");
         }
-        return profit;
+        bw.flush();
     }
 }
