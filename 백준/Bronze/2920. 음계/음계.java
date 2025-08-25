@@ -6,33 +6,27 @@ public class Main
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         
+        int[] ascending = {1, 2, 3, 4, 5, 6, 7, 8};
+        int[] descending = {8, 7, 6, 5, 4, 3, 2, 1};
+        int[] arr = new int[8];
+        
         String music = br.readLine();
+        String type;
         
         StringTokenizer st = new StringTokenizer(music, " ");
         
-        int firstNote = Integer.parseInt(st.nextToken());
-        
-        int diff = firstNote == 8 ? -1 : firstNote == 1 ? 1 : 0;
-        
-        if(diff==0) {
-            bw.write("mixed");
-            bw.flush();
-            return;
+        for(int i=0;i<8;i++){
+            arr[i] = Integer.parseInt(st.nextToken());
         }
         
-        int prevNote = firstNote;
-        for(int i=0;i<7;i++){
-            int note = Integer.parseInt(st.nextToken());
-            
-            if(prevNote + diff != note) {
-                bw.write("mixed");
-                bw.flush();
-                return;
-            }
-            prevNote = note;
+        if(Arrays.equals(ascending, arr)) {
+            type = "ascending";
+        } else if(Arrays.equals(descending, arr)) {
+            type = "descending";
+        } else {
+            type = "mixed";
         }
-        
-        bw.write(firstNote==8?"descending":"ascending");
+        bw.write(type);
         bw.flush();
     }
 }
