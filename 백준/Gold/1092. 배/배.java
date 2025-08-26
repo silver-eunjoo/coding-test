@@ -26,16 +26,17 @@ public class Main {
             bw.flush();
             return;
         }
-        
         int sec = 0;
+        int craneSize = cranes.length;
         while(!boxes.isEmpty()) {
-            for(int i=0;i<N;i++){
-                for(int j=0;j<boxes.size();j++){
-                    if(cranes[i] >= boxes.get(j)) {
-                        boxes.remove(j);
-                        break;
-                    }
-                }
+            int craneIdx = 0;  
+            int boxIdx = 0;
+            while(craneIdx < craneSize) {
+                if(boxIdx == boxes.size()) break;
+                if(cranes[craneIdx] >= boxes.get(boxIdx)) {
+                    boxes.remove(boxIdx);
+                    craneIdx++;
+                } else boxIdx++;
             }
             sec++;
         }
