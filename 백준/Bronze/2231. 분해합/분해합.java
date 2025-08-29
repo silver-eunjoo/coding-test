@@ -8,20 +8,21 @@ public class Main{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 	    int N = Integer.parseInt(br.readLine());
-	    int num = 0;
-	    for(int i=1;i<N;i++){
-	        num+=i;
-	        String[] nums = Integer.toString(i).split("");
-	        for(int j=0;j<nums.length;j++){
-	            num+=Integer.parseInt(nums[j]);
+	    int result = 0;
+	    int start = Math.max(1, N-9*String.valueOf(N).length());
+	    for(int i=start;i<N;i++){
+	        int sum = i;
+	        int tmp = i;
+	        while(tmp > 0) {
+	            sum += tmp%10;
+	            tmp /= 10;
 	        }
-	        if(num==N) {
-	            num=i;
+	        if(sum==N){
+	            result=i;
 	            break;
 	        }
-	        num=0;
 	    }
-	    bw.write(String.valueOf(num));
+	    bw.write(String.valueOf(result));
 	    bw.flush();
 	}
 }
