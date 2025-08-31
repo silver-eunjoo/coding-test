@@ -8,26 +8,28 @@ public class Main{
         StringTokenizer st = new StringTokenizer(br.readLine(), " ");
         int N = Integer.parseInt(st.nextToken());
         int K = Integer.parseInt(st.nextToken());
-        int pos = 0;
         String table = br.readLine();
-        boolean[] eaten = new boolean[N];
+        List<Integer> H = new ArrayList<>();
+        List<Integer> P = new ArrayList<>();
+        for(int i=0;i<N;i++){
+            if(table.charAt(i)=='H') H.add(i);
+            else P.add(i);
+        }
+        int i=0;
+        int j=0;
         int cnt = 0;
-        while(pos<N) {
-            if(table.charAt(pos)!='H'){
-                pos++;
+        while(i<H.size() && j<P.size()){
+            int h = H.get(i);
+            int p = P.get(j);
+            if(Math.abs(h-p)<=K) {
+                cnt++;
+                i++;
+                j++;
                 continue;
             }
-            for(int i=-K;i<=K;i++){
-                if(pos+i<0||pos+i>=N) continue;
-                if(!eaten[pos+i] && table.charAt(pos+i)=='P') {
-                    eaten[pos+i] = true;
-                    eaten[pos] = true;
-                    cnt++;
-                    break;
-                }
-            }
-            pos++;
-        }
+            if(p>h) i++;
+            else j++;
+        } 
         bw.write(String.valueOf(cnt));
         bw.flush();
 	}
