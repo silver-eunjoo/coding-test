@@ -10,8 +10,8 @@ public class Main{
     static int manhatten(int[] here, int[] there) {
         return Math.abs(here[0] - there[0]) + Math.abs(here[1] - there[1]);
     }
-    static String dfs(int[] current) {
-        if(current[0]==end[0] && current[1]==end[1]) return "happy";
+    static boolean dfs(int[] current) {
+        if(current[0]==end[0] && current[1]==end[1]) return true;
         if(manhatten(end, current) <= 1000) {
             return dfs(end);
         }
@@ -19,11 +19,11 @@ public class Main{
             if(!visited[i]) {
                 if(manhatten(current, con[i]) <= 1000) {
                     visited[i] = true;
-                    if(dfs(con[i]).equals("happy")) return "happy";
+                    if(dfs(con[i])) return true;
                 }
             }
         }
-        return "sad";
+        return false;
     }
 	public static void main(String[] args) throws Exception{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -47,7 +47,7 @@ public class Main{
             st = new StringTokenizer(br.readLine(), " ");
             end[0] = Integer.parseInt(st.nextToken());
             end[1] = Integer.parseInt(st.nextToken());
-            bw.write(dfs(start)+"\n");
+            bw.write(dfs(start)?"happy\n":"sad\n");
         }
         bw.flush();
 	}
