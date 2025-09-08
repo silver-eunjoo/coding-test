@@ -7,35 +7,36 @@ public class Main{
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringBuilder sb = new StringBuilder();
         int N = Integer.parseInt(br.readLine());
-        List<Integer> list = new ArrayList<>();
-        Map<Integer, Integer> frequency = new HashMap<>();
+        int[] arr = new int[N];
+        int[] count = new int[8001];
+        int max = -4001;
+        int min = 4001;
+        int total = 0;
+        int maxCnt = 0;
         for(int i=0;i<N;i++){
-            int num = Integer.parseInt(br.readLine());
-            list.add(num);
-            frequency.put(num, frequency.getOrDefault(num, 0) + 1);
+            arr[i] = Integer.parseInt(br.readLine());
+            max = Math.max(max, arr[i]);
+            min = Math.min(min, arr[i]);
+            total+=arr[i];
+            count[arr[i]+4000]++;
+            maxCnt = Math.max(maxCnt, count[arr[i]+4000]);
         }
-        Collections.sort(list);
-        int frequent = 0;
-        for(Integer key : frequency.keySet()) {
-            frequent = Math.max(frequent, frequency.get(key));
-        }
-        int[] f = new int[N];
-        int idx = 0;
-        Arrays.fill(f, Integer.MAX_VALUE);
-        for(Integer key : frequency.keySet()) {
-            if(frequency.get(key) == frequent) {
-                f[idx++] = key;
+        Arrays.sort(arr);
+        int frequent = -1;
+        int found = 0;
+        for(int i=0;i<8001;i++){
+            if(maxCnt == count[i]) {
+                frequent = i-4000;
+                found++;
+            }
+            if(found==2){
+                break;
             }
         }
-        sb.append(Math.round((double)list.stream().mapToInt(i->i).sum()/N) + "\n");
-        sb.append(list.get(N/2) + "\n");
-        if(idx==1) {
-            sb.append(f[0] + "\n");
-        } else {
-            Arrays.sort(f);
-            sb.append(f[1] + "\n");
-        }
-        sb.append((Collections.max(list)-Collections.min(list)) + "\n");
+        sb.append(Math.round((double)total/N) + "\n");
+        sb.append(arr[N/2]+"\n");
+        sb.append(frequent + "\n");
+        sb.append((max-min)+"\n");
         bw.write(sb.toString());
         bw.flush();
 	}
