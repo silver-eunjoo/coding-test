@@ -13,9 +13,7 @@ public class Main{
             int N = Integer.parseInt(br.readLine());
             while(N-->0){
                 String[] input = br.readLine().split(" ");
-                int count = closet.getOrDefault(input[1], 0);
-                count++;
-                closet.put(input[1], count);
+                closet.put(input[1], closet.getOrDefault(input[1], 0) + 1);
             }
             int result = 1;
             for(String key : closet.keySet()) {
