@@ -69,7 +69,6 @@ public class Main{
         int temp = 0;
         while(temp<2) {
             temp = 0;
-            zeros = new int[N][M];
             visited = new boolean[N][M];
             year++;
             yearsLater();
