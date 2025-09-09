@@ -9,17 +9,19 @@ public class Main{
         StringTokenizer st = new StringTokenizer(br.readLine(), " ");
         int K = Integer.parseInt(st.nextToken());
         int L = Integer.parseInt(st.nextToken());
-        Map<String, Integer> line = new HashMap<>();
+        Map<String, Integer> line = new LinkedHashMap<>();
         for(int i=0;i<L;i++){
             String studentNum = br.readLine();
+            if(line.containsKey(studentNum)) line.remove(studentNum);
             line.put(studentNum, i);
+            
         }
-        List<Map.Entry<String, Integer>> mapList = new ArrayList<>(line.entrySet());
-        mapList.sort((m1, m2) -> m1.getValue() - m2.getValue());
-        for(int i=0;i<mapList.size();i++){
+        Set<Map.Entry<String, Integer>> mapList = new HashSet<>(line.entrySet());
+        for(Map.Entry<String, Integer> entry : line.entrySet()) {
             if(K==0) break;
-            sb.append(mapList.get(i).getKey() + "\n");
+            sb.append(entry.getKey() + "\n");
             K--;
+            
         }
         bw.write(sb.toString());
         bw.flush();
