@@ -8,17 +8,11 @@ public class Main{
         StringTokenizer st;
         StringBuilder sb = new StringBuilder();
         int N = Integer.parseInt(br.readLine());
-        List<Integer>[] tree = new ArrayList[N+1];
         int[] degree = new int[N+1];
-        for(int i=1;i<=N;i++){
-            tree[i] = new ArrayList<>();
-        }
-        for(int i=1;i<N;i++){
+        while(N-->1){
             st = new StringTokenizer(br.readLine(), " ");
             int a = Integer.parseInt(st.nextToken());
             int b = Integer.parseInt(st.nextToken());
-            tree[a].add(b);
-            tree[b].add(a);
             degree[a]++;
             degree[b]++;
         }
