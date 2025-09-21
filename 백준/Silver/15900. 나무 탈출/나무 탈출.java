@@ -3,16 +3,23 @@ import java.util.*;
 
 public class Main{
     static List<Integer>[] tree;
-    static long totalDepth = 0;
-    public static long dfs(int now, int prev, long depth) {
-        if(tree[now].size()==1 && tree[now].get(0) == prev) return depth;
-        for(Integer node : tree[now]) {
-            if(node!=prev) {
-                long dist = dfs(node, now, depth+1);
-                totalDepth+=dist;
+    static boolean[] visited;
+    static int totalDepth = 0;
+    public static void bfs() {
+        Queue<int[]> q = new ArrayDeque<>();
+        q.offer(new int[]{1, 0});
+        visited[1] = true;
+        while(!q.isEmpty()){
+            int[] cur = q.poll();
+            boolean isLeaf = true;
+            for(int next : tree[cur[0]]) {
+                if(visited[next]) continue;
+                visited[next] = true;
+                isLeaf = false;
+                q.offer(new int[]{next, cur[1]+1});
             }
+            if(isLeaf) totalDepth+=cur[1];
         }
-        return 0;
     }
 	public static void main(String[] args) throws Exception{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -21,6 +28,7 @@ public class Main{
         StringTokenizer st;
         int N = Integer.parseInt(br.readLine());
         tree = new ArrayList[N+1];
+        visited = new boolean[N+1];
         for(int i=1;i<=N;i++) {
             tree[i] = new ArrayList<>();
         }
@@ -31,7 +39,7 @@ public class Main{
             tree[a].add(b);
             tree[b].add(a);
         }
-        dfs(1, 0, 0);
+        bfs();
         bw.write(totalDepth%2==0?"No":"Yes");
         bw.flush();
 	}
