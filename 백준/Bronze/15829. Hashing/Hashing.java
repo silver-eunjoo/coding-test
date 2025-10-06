@@ -4,6 +4,7 @@ import java.util.*;
 public class Main{
     private static final int R = 31;
     private static final int M = 1234567891;
+    private static long power = 1;
 	public static void main(String[] args) throws Exception{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
@@ -12,9 +13,13 @@ public class Main{
         long answer = 0L;
         for(int i=0;i<N;i++){
             int temp = input.charAt(i) - 96;
-            answer+=temp * (long)Math.pow(R, i);
+            if(i==0) {
+                answer+=temp * power;    
+                continue;
+            }
+            power = (power*R)%M;
+            answer = (answer+ temp*power) % M;
         }
-        if(answer >= M) answer%=M;
         bw.write(String.valueOf(answer));
         bw.flush();
 	}
