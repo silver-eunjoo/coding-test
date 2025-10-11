@@ -9,16 +9,16 @@ public class Main {
 		StringBuilder sb = new StringBuilder();
 		int N = Integer.parseInt(st.nextToken());
 		int K = Integer.parseInt(st.nextToken());
-		Queue<Integer> q = new ArrayDeque<>();
-		for(int i=0;i<N;i++) q.offer(i+1);
+		List<Integer> numList = new ArrayList<>();
+		for(int i=0;i<N;i++) numList.add(i+1);
+		int idx = 0;
 		sb.append("<");
-		while(!q.isEmpty()){
+		while(N>0) {
 		    if(sb.length()!=1) sb.append(", ");
-		    for(int i=0;i<K-1;i++){
-		        int x = q.poll();
-		        q.offer(x);
-		    }
-		    sb.append(q.poll());
+		    idx = (idx + K - 1) % N;
+		    sb.append(numList.get(idx));
+		    numList.remove(idx);
+		    N--;
 		}
 		bw.write(sb.toString());
 		bw.write(">");
