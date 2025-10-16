@@ -7,41 +7,33 @@ public class Main {
     static int[] weight;
     static int[] order;
     static int maxBrokenEgg = 0;
-    public static void dfs(int idx) {
+    public static void countBrokenEggs(int idx, int brokenEgg) {
         if(idx==N) {
-            int count = 0;
-            for(int i=0;i<N;i++){
-                if(endurance[i] <= 0) count++;
-            }
-            maxBrokenEgg = Math.max(count, maxBrokenEgg);
+            maxBrokenEgg = Math.max(brokenEgg, maxBrokenEgg);
             return;
         }
         
-        if(endurance[idx] <= 0) {
-            dfs(idx+1);
+        if(endurance[idx] <=0) {
+            countBrokenEggs(idx +1, brokenEgg);
             return;
         }
         
-        boolean allBroken = true;
+        boolean possible = false;
         for(int i=0;i<N;i++){
-            if(idx!=i && endurance[i] > 0) {
-                allBroken = false;
-                break;
-            }
-        }
-        if(allBroken) {
-            dfs(N);
-            return;
-        }
-        
-        for(int i=0;i<N;i++){
-            if(idx==i) continue;
-            if(endurance[i] <= 0) continue;
+            if(idx==i || endurance[i] <=0) continue;
+            possible = true;
             endurance[idx] -= weight[i];
             endurance[i] -= weight[idx];
-            dfs(idx+1);
+            int count = brokenEgg;
+            if(endurance[idx] <=0) count++;
+            if(endurance[i] <=0) count++;
+            countBrokenEggs(idx+1, count);
             endurance[idx] += weight[i];
             endurance[i] += weight[idx];
+        }
+        if(!possible) {
+            countBrokenEggs(N, brokenEgg);
+            return;
         }
     }
     public static void main(String[] args) throws IOException {
@@ -57,7 +49,7 @@ public class Main {
 		    endurance[i] = Integer.parseInt(st.nextToken());
 		    weight[i] = Integer.parseInt(st.nextToken());
 		}
-		dfs(0);
+		countBrokenEggs(0, 0);
 		bw.write(String.valueOf(maxBrokenEgg));
 		bw.flush();
 	}
