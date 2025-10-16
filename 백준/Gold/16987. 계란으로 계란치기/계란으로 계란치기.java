@@ -7,33 +7,42 @@ public class Main {
     static int[] weight;
     static int[] order;
     static int maxBrokenEgg = 0;
-    public static void repeatPermut(int depth) {
-        if(depth==N) {
-            maxBrokenEgg = Math.max(maxBrokenEgg, simulation());
+    public static void dfs(int idx) {
+        if(idx==N) {
+            int count = 0;
+            for(int i=0;i<N;i++){
+                if(endurance[i] <= 0) count++;
+            }
+            maxBrokenEgg = Math.max(count, maxBrokenEgg);
             return;
         }
+        
+        if(endurance[idx] <= 0) {
+            dfs(idx+1);
+            return;
+        }
+        
+        boolean allBroken = true;
         for(int i=0;i<N;i++){
-            if(depth==i) continue;
-            order[depth] = i;
-            repeatPermut(depth + 1);
+            if(idx!=i && endurance[i] > 0) {
+                allBroken = false;
+                break;
+            }
         }
-    }
-    public static int simulation() {
-        int idx = 0;
-        int[] tempE = endurance.clone();
-        int[] tempW = weight.clone();
-        for(int i=0;i<N &&idx<N;i++, idx++){
-            int target = order[i];
-            if(tempE[idx] <= 0 || tempE[target] <= 0) continue;
-            tempE[idx]-=tempW[target];
-            tempE[target]-=tempW[idx];
+        if(allBroken) {
+            dfs(N);
+            return;
         }
-        int cnt = 0;
+        
         for(int i=0;i<N;i++){
-            if(tempE[i] > 0) continue;
-            cnt++;
+            if(idx==i) continue;
+            if(endurance[i] <= 0) continue;
+            endurance[idx] -= weight[i];
+            endurance[i] -= weight[idx];
+            dfs(idx+1);
+            endurance[idx] += weight[i];
+            endurance[i] += weight[idx];
         }
-        return cnt;
     }
     public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -48,7 +57,7 @@ public class Main {
 		    endurance[i] = Integer.parseInt(st.nextToken());
 		    weight[i] = Integer.parseInt(st.nextToken());
 		}
-		repeatPermut(0);
+		dfs(0);
 		bw.write(String.valueOf(maxBrokenEgg));
 		bw.flush();
 	}
