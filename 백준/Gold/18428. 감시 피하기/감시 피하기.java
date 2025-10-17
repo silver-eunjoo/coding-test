@@ -16,7 +16,9 @@ public class Main {
             for(int j=0;j<N;j++){
                 if(!aisle[i][j].equals("T")) continue;
                 q.offer(new int[]{i, j});
+                if(q.size() == T) break;
             }
+            if(q.size() == T) break;
         }
         while(!q.isEmpty()) {
             int[] t = q.poll();
