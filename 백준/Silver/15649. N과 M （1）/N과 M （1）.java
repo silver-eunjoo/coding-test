@@ -6,10 +6,11 @@ public class Main {
     static int M;
     static boolean[] visited;
     static int[] selected;
+    static StringBuilder sb = new StringBuilder();
     public static void permutation(int depth) {
         if(depth==M) {
-            for(int num : selected) System.out.print(num + " ");
-            System.out.println();
+            for(int num : selected) sb.append(num + " ");
+            sb.append("\n");
             return;
         }
         
@@ -30,5 +31,7 @@ public class Main {
 		visited = new boolean[N+1];
 		selected = new int[M];
 		permutation(0);
+		bw.write(sb.toString());
+		bw.flush();
 	}
 }
