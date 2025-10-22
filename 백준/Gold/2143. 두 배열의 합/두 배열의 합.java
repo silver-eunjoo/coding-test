@@ -2,23 +2,23 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    static List<Integer> bSum;
+    static int[] bSum;
     public static int lowerBound(int target) {
         int left = 0;
-        int right = bSum.size();
+        int right = bSum.length;
         while(left<right) {
             int mid = (left + right)/2;
-            if(bSum.get(mid) < target) left = mid +1;
+            if(bSum[mid] < target) left = mid +1;
             else right = mid;
         }
         return left;
     }
     public static int upperBound(int target) {
         int left = 0;
-        int right = bSum.size();
+        int right = bSum.length;
         while(left<right) {
             int mid = (left + right)/2;
-            if(bSum.get(mid) <= target) left = mid+1;
+            if(bSum[mid] <= target) left = mid+1;
             else right = mid;
         }
         return left;
@@ -40,27 +40,25 @@ public class Main {
 		for(int i=0;i<M;i++){
 		    B[i] = Integer.parseInt(st.nextToken());
 		}
-        List<Integer> aSum = new ArrayList<>();
+        int[] aSum = new int[(N*(N+1))/2];
+        int idx = 0;
 		for(int i=0;i<N;i++){
 		    int sum = 0;
-		    int idx = 0;
-		    while(i+idx < N) {
-		        sum+=A[i+idx];
-		        aSum.add(sum);
-		        idx++;
+		    for(int j=0;i+j<N;j++){
+		        sum+=A[i+j];
+		        aSum[idx++] = sum;
 		    }
 		}
-		bSum = new ArrayList<>();
+		bSum = new int[(M*(M+1))/2];
+		idx = 0;
 		for(int i=0;i<M;i++){
 		    int sum = 0;
-		    int idx = 0;
-		    while(i+idx < M) {
-		        sum+=B[i+idx];
-		        bSum.add(sum);
-		        idx++;
+		    for(int j=0;i+j<M;j++){
+		        sum+=B[i+j];
+		        bSum[idx++] = sum;
 		    }
 		}
-		Collections.sort(bSum);
+		Arrays.sort(bSum);
 		long answer = 0;
 		for(int a : aSum) {
 		    int target = T - a;
