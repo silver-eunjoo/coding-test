@@ -19,10 +19,11 @@ public class Main {
 		while(M-->0) {
 		    String input = br.readLine();
 		    if(Character.isDigit(input.charAt(0))) { // 숫자로 들어오면
-		        sb.append(numToName.get(Integer.parseInt(input))+"\n");
+		        sb.append(numToName.get(Integer.parseInt(input)));
 		    } else {
-		        sb.append(nameToNum.get(input)+"\n");
+		        sb.append(nameToNum.get(input));
 		    }
+		    sb.append("\n");
 		}
 		bw.write(sb.toString());
 		bw.flush();
