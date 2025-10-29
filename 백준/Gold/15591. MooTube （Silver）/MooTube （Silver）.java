@@ -16,6 +16,7 @@ public class Main {
             int next = node[0];
             int weight = node[1];
             if(Math.min(weight, minWeight) >= K) cnt++;
+            if(Math.min(weight, minWeight) < K) continue;
             dfs(next, Math.min(weight, minWeight));
         }
     }
