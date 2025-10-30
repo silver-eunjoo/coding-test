@@ -7,7 +7,6 @@ public class Main {
     static char[][] board;
     static int[][] visited;
     static int total = 0;
-    static int stageTotal = 0;
     static int[] dx = {0, 1, 0, -1};
     static int[] dy = {1, 0, -1, 0};
     private static void bfs() {
@@ -33,10 +32,9 @@ public class Main {
             for(int j=0;j<M;j++){
                 if(visited[i][j]<2) continue;
                 board[i][j] = '0';
-                stageTotal++;
+                total--;
             }
         }
-        total-=stageTotal;
     }
 	public static void main(String[] args) throws IOException{
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -55,7 +53,6 @@ public class Main {
 		}
 		int time = 0;
 		while(total>0) {
-		    stageTotal=0;
 		    visited = new int[N][M];
 		    time++;
 		    bfs();
