@@ -5,35 +5,16 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-		StringBuilder sb = new StringBuilder();
+		String[] input = br.readLine().split("-");
 		int total = 0;
-		boolean minus = false;
-		String input = br.readLine();
-		for(int i=0;i<input.length();i++){
-		    if(Character.isDigit(input.charAt(i))) sb.append(input.charAt(i));
-		    else if(input.charAt(i)=='+') {
-		        if(!minus) {
-		            total+=Integer.parseInt(sb.toString());
-		        } else {
-		            total-=Integer.parseInt(sb.toString());
-		        }
-		        sb.setLength(0);
-		    } else {
-		        if(!minus) {
-		            minus = true;
-		            total+=Integer.parseInt(sb.toString());
-		            sb.setLength(0);
-		        }
-		        else {
-		            total-=Integer.parseInt(sb.toString());
-		            sb.setLength(0);
-		        }
-		    }
-		}
-		if(minus) {
-		    total-=Integer.parseInt(sb.toString());
-		} else {
-		    total+=Integer.parseInt(sb.toString());
+		for(int i=0;i<input.length;i++){
+		     String[] splited = input[i].split("\\+");
+		     int sum = 0;
+		     for(String num : splited) {
+		         sum+=Integer.parseInt(num);
+		     }
+		     if(i==0) total+=sum;
+		     else total-=sum;
 		}
 		bw.write(String.valueOf(total));
 		bw.flush();
