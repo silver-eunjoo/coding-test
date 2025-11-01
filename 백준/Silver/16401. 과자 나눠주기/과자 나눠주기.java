@@ -19,7 +19,6 @@ public class Main {
 		    snack[i] = Integer.parseInt(st.nextToken());
 		    max = Math.max(max, snack[i]);
 		}
-		Arrays.sort(snack);
 		int maxLength = 0;
 	    int min = 1;
 		while(min<=max) {
