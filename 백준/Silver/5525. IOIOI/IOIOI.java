@@ -9,20 +9,20 @@ public class Main {
 		int N = Integer.parseInt(br.readLine());
 		int S = Integer.parseInt(br.readLine());
 		String input = br.readLine();
-		for(int i=0;i<2*N+1;i++){
-		    if(i%2==0) sb.append("I");
-		    else sb.append("O");
-		}
-		int idx = 0;
 		int count = 0;
-		int find = 0;
-		while(true) {
-		    find = input.substring(idx).indexOf(sb.toString());
-		    if(find==-1) break;
-		    count++;
-		    idx = find + 2 + idx;
+		int patternCount = 0;
+		for(int i=1;i<S-1;i++){
+		    if(input.charAt(i-1)=='I' && input.charAt(i)=='O' && input.charAt(i+1)=='I') {
+		        patternCount++;
+		        i++;
+		        if(patternCount==N) {
+		            count++;
+		            patternCount--;
+		        }
+		    } else {
+		        patternCount=0;
+		    }
 		}
-		
 		bw.write(String.valueOf(count));
 		bw.flush();
 	}
