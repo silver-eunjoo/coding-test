@@ -4,7 +4,7 @@ import java.io.*;
 public class Main {
     static int N;
     static int D;
-    static List<int[]>[] shortcut;
+    static List<int[]>[] way;
     static int[] dist;
     static int INF = 1_000_000_000;
     private static void dijkstra(int start) {
@@ -13,10 +13,10 @@ public class Main {
         dist[start] = 0;
         while(!pq.isEmpty()) {
             int[] cur = pq.poll();
-            if(cur[1] > dist[cur[0]]) continue;
-            int now = cur[0];
+            int pos = cur[0];
             int cost = cur[1];
-            for(int[] next : shortcut[now]) {
+            if(cost>dist[pos]) continue;
+            for(int[] next : way[pos]) {
                 int nextPos = next[0];
                 int nextCost = cost + next[1];
                 if(nextCost < dist[nextPos]) {
@@ -24,34 +24,31 @@ public class Main {
                     pq.offer(new int[]{nextPos, nextCost});
                 }
             }
-            if(now + 1 <= D && dist[now] + 1 < dist[now+1]) {
-                dist[now+1] = dist[now] + 1;
-                pq.offer(new int[]{now+1, dist[now+1]});
-            }
         }
     }
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-		StringBuilder sb = new StringBuilder();
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		N = Integer.parseInt(st.nextToken());
 		D = Integer.parseInt(st.nextToken());
-		shortcut = new ArrayList[D+1];
-		for(int i=0;i<=D;i++) shortcut[i] = new ArrayList<>();
 		dist = new int[D+1];
 		Arrays.fill(dist, INF);
+		way = new ArrayList[D+1];
+		for(int i=0;i<=D;i++) {
+		    way[i] = new ArrayList<>();
+		    if(i!=D) way[i].add(new int[]{i+1, 1});
+		}
 		while(N-->0) {
 		    st = new StringTokenizer(br.readLine());
-		    int n1 = Integer.parseInt(st.nextToken());
-		    int n2 = Integer.parseInt(st.nextToken());
-		    int d = Integer.parseInt(st.nextToken());
-		    if(n1>D||n2>D||(n2-n1)<=d) continue;
-		    shortcut[n1].add(new int[]{n2, d});
+		    int start = Integer.parseInt(st.nextToken());
+		    int end = Integer.parseInt(st.nextToken());
+		    int cost = Integer.parseInt(st.nextToken());
+		    if(start>D||end>D||(end-start)<=cost) continue;
+		    way[start].add(new int[]{end, cost});
 		}
 		dijkstra(0);
-		sb.append(dist[D]);
-		bw.write(sb.toString());
+		bw.write(String.valueOf(dist[D]));
 		bw.flush();
 	}
 }
