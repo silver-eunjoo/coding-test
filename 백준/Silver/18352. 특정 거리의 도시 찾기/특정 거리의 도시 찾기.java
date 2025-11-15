@@ -16,6 +16,7 @@ public class Main {
         while(!pq.isEmpty()) {
             int[] cur = pq.poll();
             if(cur[1] > dist[cur[0]]) continue;
+            if(cur[1] > K) continue;
             int now = cur[0];
             int cost = cur[1];
             for(int next : graph[now]) {
