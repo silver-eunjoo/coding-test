@@ -5,19 +5,18 @@ public class Main {
     private static Map<String, String> manito;
     private static int findCycle() {
         int cnt = 0;
-        Set<String> visited = new HashSet<>();
-        for(String start : manito.keySet()) {
-            if(visited.contains(start)) continue;
-            Set<String> path = new HashSet<>();
-            String cur = start;
-            while(!visited.contains(cur)) {
-                visited.add(cur);
-                path.add(cur);
-                cur = manito.get(cur);
-                if(path.contains(cur)) {
+        Set<String> set = new HashSet<>();
+        for(String key : manito.keySet()) {
+            if(set.contains(key)) continue;
+            String start = key;
+            while(true) {
+                String next = manito.get(start);
+                set.add(start);
+                if(key.equals(next)) {
                     cnt++;
                     break;
                 }
+                start = next;
             }
         }
         return cnt;
